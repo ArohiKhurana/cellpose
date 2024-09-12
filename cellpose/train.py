@@ -498,7 +498,7 @@ def train_seg(net, train_data=None, train_labels=None, train_files=None,
             train_losses[iepoch] += train_loss
         train_losses[iepoch] /= nimg_per_epoch
 
-        if iepoch == 5 or iepoch % 10 == 0:
+        if iepoch == 5 or iepoch % 9 == 0:
             lavgt = 0.
             if test_data is not None or test_files is not None:
                 np.random.seed(42)
