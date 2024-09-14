@@ -500,7 +500,7 @@ def train_seg(net, train_data=None, train_labels=None, train_files=None,
         train_losses[iepoch] /= nimg_per_epoch
 
         # Evaluate after every epoch
-        lavgt = 0.
+        lavgt = 2
         if test_data is not None or test_files is not None:
             np.random.seed(42)
             if nimg_test != nimg_test_per_epoch:
@@ -534,8 +534,8 @@ def train_seg(net, train_data=None, train_labels=None, train_files=None,
         lavg, nsum = 0, 0
         if lavgt < best_test_loss:
             train_logger.info(f'Best test loss improved from {best_test_loss} to {lavgt}.')
-            train_logger.info(f'Overwriting {filename0}.')
-            net.save_model(f"{filename0}_best")
+            train_logger.info(f'Overwriting {filename}_best.')
+            net.save_model(f"{filename}_best")
             train_logger.info(
                 f"{iepoch}, train_loss={lavg:.4f}, test_loss={lavgt:.4f}, LR={LR[iepoch]:.6f}, time {time.time()-t0:.2f}s"
             )
