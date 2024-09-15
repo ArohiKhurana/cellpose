@@ -530,8 +530,7 @@ def train_seg(net, train_data=None, train_labels=None, train_files=None,
                     lavgt += test_loss
             lavgt /= len(rperm)
             test_losses[iepoch] = lavgt
-        lavg /= nsum
-        lavg, nsum = 0, 0
+        
         if lavgt < best_test_loss:
             train_logger.info(f'Best test loss improved from {best_test_loss} to {lavgt}.')
             train_logger.info(f'Overwriting {filename}_best.')
@@ -544,6 +543,8 @@ def train_seg(net, train_data=None, train_labels=None, train_files=None,
             train_logger.info(
                     f"{iepoch}, train_loss={lavg:.4f}, test_loss={lavgt:.4f}, LR={LR[iepoch]:.6f}, time {time.time()-t0:.2f}s"
                 )
+        lavg /= nsum
+        lavg, nsum = 0, 0
 
         if iepoch == n_epochs - 1 or (iepoch % save_every == 0 and iepoch != 0):
             if save_each and iepoch != n_epochs - 1:  #separate files as model progresses
