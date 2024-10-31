@@ -334,8 +334,11 @@ def masks_to_flows(masks, device=torch.device("cpu"), niter=None):
         dynamics_logger.warning("empty masks!")
         return np.zeros((2, *masks.shape), "float32")
 
-    if device.type == "cuda" or device.type == "mps":
-        masks_to_flows_device = masks_to_flows_gpu
+    if device is not None:
+        if device.type == "cuda" or device.type == "mps":
+            masks_to_flows_device = masks_to_flows_cpu # Use CPU version by default to prevent error
+        else:
+            masks_to_flows_device = masks_to_flows_cpu
     else:
         masks_to_flows_device = masks_to_flows_cpu
     
